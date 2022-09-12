@@ -13,6 +13,8 @@ const Packages = () => {
 
       <div className="flex justify-between">
         <PackageCard />
+        <PackageCard />
+        <PackageCard />
       </div>
     </>
   );
