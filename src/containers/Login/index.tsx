@@ -1,9 +1,12 @@
 import Button from "components/Button";
 import Input from "components/Input";
 import Layout from "components/layout";
+import { useComponentLogic } from "./hooks";
 import styles from "./Login.module.css";
+import { REG_EXP } from "src/constants/regexp";
 
 const Login = () => {
+  const { register, handleSubmit, onSubmit, errors } = useComponentLogic();
   return (
     <Layout noFooter>
       <section className={styles.section}>
@@ -22,8 +25,18 @@ const Login = () => {
             </a>
           </div>
 
-          <form className="flex flex-col mt-8">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col mt-8"
+          >
             <Input
+              register={register}
+              errors={errors}
+              required={{ value: true, message: "Alamat email harus diisi." }}
+              pattern={{
+                value: REG_EXP.email,
+                message: "Gunakan format email dengan benar.",
+              }}
               label="Email"
               type="email"
               name="email"
@@ -32,6 +45,9 @@ const Login = () => {
             />
 
             <Input
+              register={register}
+              errors={errors}
+              required={{ value: true, message: "Password harus diisi." }}
               label="Kata sandi"
               type="password"
               name="password"
@@ -45,8 +61,16 @@ const Login = () => {
               Lupa kata sandi?
             </a>
 
-            <Button>Masuk</Button>
+            <Button type="submit" fullWidth>
+              Masuk
+            </Button>
           </form>
+
+          <p className="text-heading-5 text-gray-70 my-8">Atau masuk dengan</p>
+          <Button className="mb-4" variant="google">
+            Masuk dengan Google
+          </Button>
+          <Button variant="facebook">Masuk dengan Facebook</Button>
         </div>
       </section>
     </Layout>
